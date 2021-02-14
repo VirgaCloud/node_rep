@@ -6,9 +6,7 @@ const path = require("path");
 //STAWIAMY SERWER z express
 const express = require('express');
 const app = express();
-const port= 3000;
-
-
+const port = process.env.PORT || 3000; //dostosowanie do 1. wolnego portu (gdy wystawiam na zewnątrz) lub na moim 3000 (otwierane lokalnie)
 
 app.set("view engine", "hbs");
 
@@ -18,14 +16,15 @@ app.use("/assets", express.static(path.join(__dirname, "./assets"))) //dirname t
 app.use("/js", express.static(path.join(__dirname, "./js")))
 
 //za pomocą metody get możemy wyświetlić coś na www; przyjmuje 2 parametry
-app.get("/", function(req,res){
+app.get("/", function (req, res) {
     // res.send("Główna domena")
-    res.render("index",{
+    res.render("index", {
         pageTitle: "Zajęcia 14.02.2021",
-        subTitle: functions.subTitle,subsubTitle: functions.sample()
+        subTitle: functions.subTitle,
+        subsubTitle: functions.sample()
     })
 })
-app.get("/about", function(req,res){
+app.get("/about", function (req, res) {
     // res.send("<h3>O mnie</h3>")
     res.render("about")
 })
@@ -33,6 +32,8 @@ app.get("/about", function(req,res){
 
 //serwer ma słuchać na port 3000
 app.listen(port, (err) => {
-    if(err) {return console.log(`błąd ${err}`)}
+    if (err) {
+        return console.log(`błąd ${err}`)
+    }
     console.log(`Serer działa na porcie ${port}`)
 });
